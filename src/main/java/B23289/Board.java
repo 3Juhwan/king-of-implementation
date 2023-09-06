@@ -1,15 +1,15 @@
 package main.java.B23289;
 
-public class House {
+public class Board {
 
-    private Cell[][] house;
+    private Cell[][] board;
 
-    public House(int sizeOfRow, int sizeOfLength) {
-        house = new Cell[sizeOfRow][sizeOfLength];
+    public Board(int sizeOfRow, int sizeOfLength) {
+        board = new Cell[sizeOfRow][sizeOfLength];
     }
 
     public Cell getCellByCoordinate(int x, int y) {
-        return house[x][y];
+        return board[x][y];
     }
 
     public void setSingleCell(Cell cell) {
@@ -17,8 +17,6 @@ public class House {
             throw new AlreadyExistException("이미 존재하는 셀입니다. ");
         }
         int posX = cell.getPosX(), posY = cell.getPosY();
-        house[posX][posY] = cell;
+        board[posX][posY] = cell;
     }
-
-
 }

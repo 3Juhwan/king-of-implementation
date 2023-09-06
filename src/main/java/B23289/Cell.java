@@ -3,14 +3,29 @@ package main.java.B23289;
 public class Cell {
 
     private final int posX, posY;
-    private final int wallDirection;
+    private boolean[] wall = new boolean[5];
     private int temperature;
 
-    Cell(int x, int y, int wallDirection) {
+    Cell(int x, int y) {
         this.posX = x;
         this.posY = y;
-        this.wallDirection = wallDirection;
     }
 
+    Cell(int x, int y, int temperature) {
+        this(x, y);
+        this.temperature = temperature;
+    }
 
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setWallDirection(Direction direction) {
+        int directionNum = direction.getNum();
+        wall[directionNum] = true;
+    }
 }
