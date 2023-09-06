@@ -1,4 +1,6 @@
-package main.java.B23289;
+package main.B23289.logic;
+
+import main.B23289.logic.utils.Tuple;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,7 +47,7 @@ public class Solve {
             house.getCellByCoordinate(x, y).setWallDirection(wallDirection);
         }
 
-        
+
 
     }
 

@@ -1,4 +1,4 @@
-package main.java.B23289;
+package main.B23289.logic.utils;
 
 public class Tuple<F, S> {
 

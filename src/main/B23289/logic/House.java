@@ -1,15 +1,17 @@
-package main.java.B23289;
+package main.B23289.logic;
 
-public class Board {
+import main.B23289.logic.utils.AlreadyExistException;
 
-    private Cell[][] board;
+public class House {
 
-    public Board(int sizeOfRow, int sizeOfLength) {
-        board = new Cell[sizeOfRow][sizeOfLength];
+    private Cell[][] house;
+
+    public House(int sizeOfRow, int sizeOfLength) {
+        house = new Cell[sizeOfRow][sizeOfLength];
     }
 
     public Cell getCellByCoordinate(int x, int y) {
-        return board[x][y];
+        return house[x][y];
     }
 
     public void setSingleCell(Cell cell) {
@@ -17,6 +19,8 @@ public class Board {
             throw new AlreadyExistException("이미 존재하는 셀입니다. ");
         }
         int posX = cell.getPosX(), posY = cell.getPosY();
-        board[posX][posY] = cell;
+        house[posX][posY] = cell;
     }
+
+
 }

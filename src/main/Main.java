@@ -1,6 +1,6 @@
-package main.java;
+package main;
 
-import main.java.B23289.Solve;
+import main.B23289.logic.Solve;
 
 import java.io.IOException;
 
