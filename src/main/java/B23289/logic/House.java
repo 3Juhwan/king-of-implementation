@@ -15,10 +15,10 @@ public class House {
     }
 
     public void setSingleCell(Cell cell) {
-        if (cell != null) {
+        int posX = cell.getPosX(), posY = cell.getPosY();
+        if (house[posX][posY] != null) {
             throw new AlreadyExistException("이미 존재하는 셀입니다. ");
         }
-        int posX = cell.getPosX(), posY = cell.getPosY();
         house[posX][posY] = cell;
     }
 
