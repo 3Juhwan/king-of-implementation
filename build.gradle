@@ -2,18 +2,31 @@ plugins {
     id 'java'
 }
 
-group 'group.name'
-version '1.0-SNAPSHOT'
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'org.assertj:assertj-core:3.11.1'
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
+}
+
+jar {
+    enabled = false
 }

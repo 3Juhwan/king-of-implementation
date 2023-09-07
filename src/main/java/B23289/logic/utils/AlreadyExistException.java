@@ -1,4 +1,4 @@
-package main.B23289.logic.utils;
+package B23289.logic.utils;
 
 public class AlreadyExistException extends RuntimeException {
 

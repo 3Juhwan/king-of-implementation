@@ -1,6 +1,6 @@
-package main.B23289.logic;
+package B23289.logic;
 
-import main.B23289.logic.utils.AlreadyExistException;
+import B23289.logic.utils.AlreadyExistException;
 
 public class House {
 

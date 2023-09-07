@@ -1,4 +1,4 @@
-package main.B23289.logic;
+package B23289.logic;
 
 public class Cell {
 
