@@ -44,9 +44,7 @@ public class WindTest {
             for (int j = 0; j < house.getColumnLength(); j++) {
                 Cell cell = house.getCellByCoordinate(i, j);
                 assertThat(cell.getTemperature()).isEqualTo(houseOutput[i][j]);
-                System.out.print(cell.getTemperature());
             }
-            System.out.println();
         }
     }
 
