@@ -1,6 +1,10 @@
 package B23289;
 
 import B23289.logic.*;
+import B23289.logic.object.Cell;
+import B23289.logic.object.Heater;
+import B23289.logic.object.House;
+import B23289.logic.utils.Direction;
 import B23289.logic.utils.Tuple;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +30,17 @@ public class InputTest {
                 {0, 0, 0, 0, 3, 0, 0, 0}
         };
 
+        int[][] wallInput = new int[][]{
+                {4, 4, 1},
+                {5, 4, 0},
+                {5, 6, 0}
+        };
+
         // given
         List<List<Integer>> lines = Arrays.stream(houseInput).map(line ->
+                Arrays.asList(Arrays.stream(line).boxed().toArray(Integer[]::new))
+        ).toList();
+        List<List<Integer>> wallLines = Arrays.stream(wallInput).map(line ->
                 Arrays.asList(Arrays.stream(line).boxed().toArray(Integer[]::new))
         ).toList();
 
@@ -36,6 +49,7 @@ public class InputTest {
 
         // when
         House house = Solve.setHouse(lines, investigators, heaters);
+        Solve.setWall(wallLines, house);
 
         // then
         assertThat(investigators).extracting(Tuple::getFirst, Tuple::getSecond)
@@ -54,5 +68,7 @@ public class InputTest {
                         .containsExactly(i, j);
             }
         }
+
+        assertThat(house.getCellByCoordinate(3, 3).wallExist(Direction.DOWN)).isTrue();
     }
 }
