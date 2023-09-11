@@ -1,4 +1,4 @@
-package B23289.logic;
+package B23289.logic.object;
 
 import B23289.logic.utils.AlreadyExistException;
 
@@ -22,5 +22,11 @@ public class House {
         house[posX][posY] = cell;
     }
 
+    public int getRowLength() {
+        return house.length;
+    }
 
+    public int getColumnLength() {
+        return house[0].length;
+    }
 }

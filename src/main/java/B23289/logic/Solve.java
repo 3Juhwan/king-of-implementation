@@ -1,5 +1,9 @@
 package B23289.logic;
 
+import B23289.logic.object.Cell;
+import B23289.logic.object.Heater;
+import B23289.logic.object.House;
+import B23289.logic.utils.Direction;
 import B23289.logic.utils.Tuple;
 
 import java.io.BufferedReader;
@@ -10,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import static B23289.logic.simulater.WindShifter.propagateWind;
+
 public class Solve {
 
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,39 +23,46 @@ public class Solve {
     private static List<Heater> heaters = new ArrayList<>();
     private static List<Tuple> investigators = new ArrayList<>();
     private static List<List<Integer>> twoDimensionIntegerInput = new ArrayList<>();
-    private static int n, m, k, r;
+    private static int houseRowLength, houseColumnLength, k, r;
+
 
     public static void run() throws IOException {
-        st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
-
-        List<List<Integer>> input = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            input.add(Arrays.stream(br.readLine().split(" "))
-                    .map(s -> Integer.parseInt(s)).toList());
-        }
-
+        readVariableNMK();
+        List<List<Integer>> input = readMatrix(houseRowLength);
         House house = setHouse(input, investigators, heaters);
 
-        r = Integer.parseInt(br.readLine());
-        input = new ArrayList<>();
-        for (int i = 0; i < r; i++) {
+        readVariableR();
+        input = readMatrix(r);
+        setWall(input, house);
+
+        simulate(house, heaters);
+    }
+
+    public static void simulate(House house, List<Heater> heaters) {
+        propagateWind(house, heaters);
+    }
+
+
+    private static List<List<Integer>> readMatrix(int x) throws IOException {
+        List<List<Integer>> input = new ArrayList<>();
+        for (int i = 0; i < x; i++) {
             input.add(Arrays.stream(br.readLine().split(" "))
                     .map(s -> Integer.parseInt(s)).toList());
         }
-
-        setWall(input, house);
+        return input;
     }
 
-    /**
-     * Setting cells, inspect investigators(5), find heaters(1~4)
-     * @param lines
-     * @param investigators
-     * @param heaters
-     * @return
-     */
+    private static void readVariableR() throws IOException {
+        r = Integer.parseInt(br.readLine());
+    }
+
+    private static void readVariableNMK() throws IOException {
+        st = new StringTokenizer(br.readLine());
+        houseRowLength = Integer.parseInt(st.nextToken());
+        houseColumnLength = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+    }
+
     public static House setHouse(List<List<Integer>> lines, List<Tuple> investigators, List<Heater> heaters) {
         int n = lines.size(), m = lines.get(0).size();
 
@@ -70,9 +83,14 @@ public class Solve {
 
     public static void setWall(List<List<Integer>> lines, House house) {
         for (int i = 0; i < lines.size(); i++) {
-            int x = lines.get(i).get(0), y = lines.get(i).get(1), t = lines.get(i).get(2);
-            Direction wallDirection = t == 0 ? Direction.UP : Direction.RIGHT;
-            house.getCellByCoordinate(x, y).setWallDirection(wallDirection);
+            int x = lines.get(i).get(0) - 1, y = lines.get(i).get(1) - 1, t = lines.get(i).get(2);
+            if (t == 0) {
+                house.getCellByCoordinate(x, y).setWallDirection(Direction.UP);
+                house.getCellByCoordinate(x - 1, y).setWallDirection(Direction.DOWN);
+            } else {
+                house.getCellByCoordinate(x, y).setWallDirection(Direction.RIGHT);
+                house.getCellByCoordinate(x, y + 1).setWallDirection(Direction.LEFT);
+            }
         }
     }
 
