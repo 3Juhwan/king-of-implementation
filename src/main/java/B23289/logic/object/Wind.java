@@ -5,9 +5,9 @@ import B23289.logic.utils.Direction;
 public class Wind {
 
     private final Direction direction;
-    private int id;
-    private int x, y;
-    private int increaseAmount;
+    private final int id;
+    private final int x, y;
+    private final int increaseAmount;
 
     public Wind(int sequence, int x, int y, Direction direction, int increaseAmount) {
         this.id = sequence;
@@ -19,11 +19,6 @@ public class Wind {
 
     public Wind(Wind wind, int x, int y) {
         this(wind.id, x, y, wind.direction, wind.increaseAmount - 1);
-    }
-
-    public void increaseTemperature(House house) {
-        Cell cell = house.getCellByCoordinate(x, y);
-        cell.increaseTemperature(increaseAmount, id);
     }
 
     public int getId() {
@@ -38,11 +33,15 @@ public class Wind {
         return this.y;
     }
 
+    public int getIncreaseAmount() {
+        return this.increaseAmount;
+    }
+
     public Direction getDirection() {
         return this.direction;
     }
 
-    public int getIncreaseAmount() {
-        return this.increaseAmount;
+    public void changeTemperature(House house) {
+        house.getCell(x, y).changeTemperature(increaseAmount, id);
     }
 }

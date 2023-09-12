@@ -63,12 +63,12 @@ public class InputTest {
 
         for (int i = 0; i < houseInput.length; i++) {
             for (int j = 0; j < houseInput[0].length; j++) {
-                Cell cell = house.getCellByCoordinate(i, j);
+                Cell cell = house.getCell(i, j);
                 assertThat(cell).extracting(Cell::getPosX, Cell::getPosY)
                         .containsExactly(i, j);
             }
         }
 
-        assertThat(house.getCellByCoordinate(3, 3).wallExist(Direction.DOWN)).isTrue();
+        assertThat(house.getCell(3, 3).getWallExist(Direction.DOWN)).isTrue();
     }
 }

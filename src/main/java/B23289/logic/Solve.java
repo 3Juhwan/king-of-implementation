@@ -80,7 +80,7 @@ public class Solve {
     public static House setHouse(List<List<Integer>> lines, List<Tuple> investigators, List<Heater> heaters) {
         int n = lines.size(), m = lines.get(0).size();
 
-        House house = new House(n, m);
+        Cell[][] house = new Cell[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 int num = lines.get(i).get(j);
@@ -89,21 +89,21 @@ public class Solve {
                 } else if (num > 0) {
                     heaters.add(new Heater(i, j, Direction.valueOfLabel(num)));
                 }
-                house.setSingleCell(new Cell(i, j));
+                house[i][j] = new Cell(i, j);
             }
         }
-        return house;
+        return new House(house);
     }
 
     public static void setWall(List<List<Integer>> lines, House house) {
         for (List<Integer> line : lines) {
             int x = line.get(0) - 1, y = line.get(1) - 1, t = line.get(2);
             if (t == 0) {
-                house.getCellByCoordinate(x, y).setWallDirection(Direction.UP);
-                house.getCellByCoordinate(x - 1, y).setWallDirection(Direction.DOWN);
+                house.getCell(x, y).setWallExist(Direction.UP);
+                house.getCell(x - 1, y).setWallExist(Direction.DOWN);
             } else {
-                house.getCellByCoordinate(x, y).setWallDirection(Direction.RIGHT);
-                house.getCellByCoordinate(x, y + 1).setWallDirection(Direction.LEFT);
+                house.getCell(x, y).setWallExist(Direction.RIGHT);
+                house.getCell(x, y + 1).setWallExist(Direction.LEFT);
             }
         }
     }

@@ -9,20 +9,11 @@ public class Heater {
     private final int posX, posY;
     private final Direction direction;
 
-
     public Heater(int x, int y, Direction direction) {
         this.posX = x;
         this.posY = y;
         this.direction = direction;
     }
-
-    public Wind generateWind(House house) {
-        int nx = posX + direction.getDx(), ny = posY + direction.getDy();
-        return new Wind(id++, nx, ny, direction, 5);
-    }
-
-
-    /* Getters */
 
     public int getPosX() {
         return this.posX;
@@ -34,6 +25,11 @@ public class Heater {
 
     public Direction getDirection() {
         return this.direction;
+    }
+
+    public Wind generateWind(House house) {
+        int nx = posX + direction.getDx(), ny = posY + direction.getDy();
+        return new Wind(id++, nx, ny, direction, 5);
     }
 
 }

@@ -9,22 +9,21 @@ public class Thermostat {
         int[][] controlAmount = new int[house.getRowLength()][house.getColumnLength()];
         for (int i = 0; i < house.getRowLength() - 1; i++) {
             for (int j = 0; j < house.getColumnLength(); j++) {
-                Cell cell1 = house.getCellByCoordinate(i, j), cell2 = house.getCellByCoordinate(i + 1, j);
+                Cell cell1 = house.getCell(i, j), cell2 = house.getCell(i + 1, j);
                 compareCell(controlAmount, cell1, cell2);
             }
         }
 
         for (int i = 0; i < house.getRowLength(); i++) {
             for (int j = 0; j < house.getColumnLength() - 1; j++) {
-                Cell cell1 = house.getCellByCoordinate(i, j), cell2 = house.getCellByCoordinate(i, j + 1);
+                Cell cell1 = house.getCell(i, j), cell2 = house.getCell(i, j + 1);
                 compareCell(controlAmount, cell1, cell2);
             }
         }
 
         for (int i = 0; i < house.getRowLength(); i++) {
             for (int j = 0; j < house.getColumnLength(); j++) {
-                Cell cell = house.getCellByCoordinate(i, j);
-                cell.increaseTemperature(controlAmount[i][j]);
+                house.getCell(i, j).changeTemperature(controlAmount[i][j]);
             }
         }
     }
@@ -45,9 +44,9 @@ public class Thermostat {
         for (int i = 0; i < house.getRowLength(); i++) {
             for (int j = 0; j < house.getColumnLength(); j++) {
                 if (i == 0 || j == 0 || i == house.getRowLength() - 1 || j == house.getColumnLength() - 1) {
-                    Cell cell = house.getCellByCoordinate(i, j);
+                    Cell cell = house.getCell(i, j);
                     if (cell.getTemperature() > 0) {
-                        cell.increaseTemperature(-1);
+                        cell.changeTemperature(-1);
                     }
                 }
             }

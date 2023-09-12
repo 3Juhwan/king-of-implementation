@@ -42,7 +42,7 @@ public class WindTest {
         int[][] houseOutput = HouseOutput.getHouseOutput();
         for (int i = 0; i < house.getRowLength(); i++) {
             for (int j = 0; j < house.getColumnLength(); j++) {
-                Cell cell = house.getCellByCoordinate(i, j);
+                Cell cell = house.getCell(i, j);
                 assertThat(cell.getTemperature()).isEqualTo(houseOutput[i][j]);
             }
         }

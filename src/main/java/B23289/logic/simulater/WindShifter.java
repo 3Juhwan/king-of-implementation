@@ -24,7 +24,7 @@ public class WindShifter {
             Queue<Wind> windQueue = new LinkedList<>();
             Wind wind = heater.generateWind(house);
             windQueue.add(wind);
-            wind.increaseTemperature(house);
+            wind.changeTemperature(house);
 
             while (!windQueue.isEmpty()) {
                 Wind currendWind = windQueue.poll();
@@ -34,19 +34,19 @@ public class WindShifter {
 
                 Wind forwardWind = getForwardWind(currendWind, house);
                 if (forwardWind != null && windValidation(forwardWind, house)) {
-                    forwardWind.increaseTemperature(house);
+                    forwardWind.changeTemperature(house);
                     windQueue.add(forwardWind);
                 }
 
                 Wind diagonalLeftWind = getDiagonalLeftWind(currendWind, house);
                 if (diagonalLeftWind != null && windValidation(diagonalLeftWind, house)) {
-                    diagonalLeftWind.increaseTemperature(house);
+                    diagonalLeftWind.changeTemperature(house);
                     windQueue.add(diagonalLeftWind);
                 }
 
                 Wind diagonalRightWind = getDiagonalRightWind(currendWind, house);
                 if (diagonalRightWind != null && windValidation(diagonalRightWind, house)) {
-                    diagonalRightWind.increaseTemperature(house);
+                    diagonalRightWind.changeTemperature(house);
                     windQueue.add(diagonalRightWind);
                 }
             }
@@ -55,9 +55,9 @@ public class WindShifter {
 
     public static Wind getForwardWind(Wind wind, House house) {
         Direction direction = wind.getDirection();
-        Cell cell = house.getCellByCoordinate(wind.getX(), wind.getY());
+        Cell cell = house.getCell(wind.getX(), wind.getY());
 
-        if (!cell.wallExist(direction)) {
+        if (!cell.getWallExist(direction)) {
             int nx = cell.getPosX() + direction.getDx(), ny = cell.getPosY() + direction.getDy();
             return new Wind(wind, nx, ny);
         }
@@ -66,16 +66,16 @@ public class WindShifter {
 
     public static Wind getDiagonalLeftWind(Wind wind, House house) {
         Direction leftDirection = wind.getDirection().relativeLeftDirection();
-        Cell cell = house.getCellByCoordinate(wind.getX(), wind.getY());
+        Cell cell = house.getCell(wind.getX(), wind.getY());
 
-        if (!cell.wallExist(leftDirection)) {
+        if (!cell.getWallExist(leftDirection)) {
             int nx = cell.getPosX() + leftDirection.getDx(), ny = cell.getPosY() + leftDirection.getDy();
-            if (outOfBound(nx, ny, house.getRowLength(), house.getColumnLength())) {
+            if (outOfBounds(nx, ny, house.getRowLength(), house.getColumnLength())) {
                 return null;
             }
-            Cell leftCell = house.getCellByCoordinate(nx, ny);
+            Cell leftCell = house.getCell(nx, ny);
             Direction rightDirection = leftDirection.relativeRightDirection();
-            if (!leftCell.wallExist(rightDirection)) {
+            if (!leftCell.getWallExist(rightDirection)) {
                 nx = leftCell.getPosX() + rightDirection.getDx();
                 ny = leftCell.getPosY() + rightDirection.getDy();
                 return new Wind(wind, nx, ny);
@@ -86,16 +86,16 @@ public class WindShifter {
 
     public static Wind getDiagonalRightWind(Wind wind, House house) {
         Direction rightDirection = wind.getDirection().relativeRightDirection();
-        Cell cell = house.getCellByCoordinate(wind.getX(), wind.getY());
+        Cell cell = house.getCell(wind.getX(), wind.getY());
 
-        if (!cell.wallExist(rightDirection)) {
+        if (!cell.getWallExist(rightDirection)) {
             int nx = cell.getPosX() + rightDirection.getDx(), ny = cell.getPosY() + rightDirection.getDy();
-            if (outOfBound(nx, ny, house.getRowLength(), house.getColumnLength())) {
+            if (outOfBounds(nx, ny, house.getRowLength(), house.getColumnLength())) {
                 return null;
             }
-            Cell rightCell = house.getCellByCoordinate(nx, ny);
+            Cell rightCell = house.getCell(nx, ny);
             rightDirection = rightDirection.relativeLeftDirection();
-            if (!rightCell.wallExist(rightDirection)) {
+            if (!rightCell.getWallExist(rightDirection)) {
                 nx = rightCell.getPosX() + rightDirection.getDx();
                 ny = rightCell.getPosY() + rightDirection.getDy();
                 return new Wind(wind, nx, ny);
@@ -114,7 +114,7 @@ public class WindShifter {
      * @return validation result
      */
     private static boolean windValidation(Wind wind, House house) {
-        if (outOfBound(wind.getX(), wind.getY(), house.getRowLength(), house.getColumnLength())) {
+        if (outOfBounds(wind.getX(), wind.getY(), house.getRowLength(), house.getColumnLength())) {
             return false;
         } else if (visited(wind, house)) {
             return false;
@@ -123,13 +123,12 @@ public class WindShifter {
         }
     }
 
-    private static boolean outOfBound(int x, int y, int boundX, int boundY) {
+    private static boolean outOfBounds(int x, int y, int boundX, int boundY) {
         return x < 0 || x >= boundX || y < 0 || y >= boundY;
     }
 
     private static boolean visited(Wind wind, House house) {
-        int x = wind.getX(), y = wind.getY();
-        Cell cell = house.getCellByCoordinate(x, y);
+        Cell cell = house.getCell(wind.getX(), wind.getY());
         return cell.getLastWind() >= wind.getId();
     }
 
