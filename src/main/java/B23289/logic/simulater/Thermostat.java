@@ -41,4 +41,17 @@ public class Thermostat {
         controlAmount[lowCell.getPosX()][lowCell.getPosY()] += diff;
     }
 
+    public static void decreaseOuterCell(House house) {
+        for (int i = 0; i < house.getRowLength(); i++) {
+            for (int j = 0; j < house.getRowLength(); j++) {
+                if (i == 0 || j == 0 || i == house.getRowLength() - 1 || j == house.getColumnLength() - 1) {
+                    Cell cell = house.getCellByCoordinate(i, j);
+                    if (cell.getTemperature() > 0) {
+                        cell.increaseTemperature(-1);
+                    }
+                }
+            }
+        }
+    }
+
 }
