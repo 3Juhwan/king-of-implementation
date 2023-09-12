@@ -2,6 +2,7 @@ package B23289.logic.simulater;
 
 import B23289.logic.object.Cell;
 import B23289.logic.object.House;
+import B23289.logic.utils.Direction;
 
 public class Thermostat {
 
@@ -10,6 +11,9 @@ public class Thermostat {
         for (int i = 0; i < house.getRowLength() - 1; i++) {
             for (int j = 0; j < house.getColumnLength(); j++) {
                 Cell cell1 = house.getCell(i, j), cell2 = house.getCell(i + 1, j);
+                if (cell1.getWallExist(Direction.DOWN)) {
+                    continue;
+                }
                 compareCell(controlAmount, cell1, cell2);
             }
         }
@@ -17,6 +21,9 @@ public class Thermostat {
         for (int i = 0; i < house.getRowLength(); i++) {
             for (int j = 0; j < house.getColumnLength() - 1; j++) {
                 Cell cell1 = house.getCell(i, j), cell2 = house.getCell(i, j + 1);
+                if(cell1.getWallExist(Direction.RIGHT)) {
+                    continue;
+                }
                 compareCell(controlAmount, cell1, cell2);
             }
         }
