@@ -28,6 +28,10 @@ public class Cell {
         this.lastWind = windId;
     }
 
+    public void increaseTemperature(int diff) {
+        this.temperature += diff;
+    }
+
 
     public int getPosX() {
         return posX;
