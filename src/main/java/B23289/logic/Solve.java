@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import static B23289.logic.simulater.Inspector.inspect;
+import static B23289.logic.simulater.Thermostat.controlTemperature;
+import static B23289.logic.simulater.Thermostat.decreaseOuterCell;
 import static B23289.logic.simulater.WindShifter.propagateWind;
 
 public class Solve {
@@ -21,25 +24,36 @@ public class Solve {
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static StringTokenizer st;
     private static List<Heater> heaters = new ArrayList<>();
-    private static List<Tuple> investigators = new ArrayList<>();
+    private static List<Tuple> targets = new ArrayList<>();
     private static List<List<Integer>> twoDimensionIntegerInput = new ArrayList<>();
     private static int houseRowLength, houseColumnLength, k, r;
 
 
     public static void run() throws IOException {
+        int chocolate = 1;
+
         readVariableNMK();
         List<List<Integer>> input = readMatrix(houseRowLength);
-        House house = setHouse(input, investigators, heaters);
+        House house = setHouse(input, targets, heaters);
 
         readVariableR();
         input = readMatrix(r);
         setWall(input, house);
 
-        simulate(house, heaters);
+        while (simulate(house, heaters)) {
+            chocolate++;
+            br.readLine();
+        }
+
+        System.out.println(chocolate);
     }
 
-    public static void simulate(House house, List<Heater> heaters) {
+
+    public static boolean simulate(House house, List<Heater> heaters) {
         propagateWind(house, heaters);
+        controlTemperature(house);
+        decreaseOuterCell(house);
+        return inspect(targets, house, k);
     }
 
 
@@ -47,7 +61,7 @@ public class Solve {
         List<List<Integer>> input = new ArrayList<>();
         for (int i = 0; i < x; i++) {
             input.add(Arrays.stream(br.readLine().split(" "))
-                    .map(s -> Integer.parseInt(s)).toList());
+                    .map(Integer::parseInt).toList());
         }
         return input;
     }
@@ -82,8 +96,8 @@ public class Solve {
     }
 
     public static void setWall(List<List<Integer>> lines, House house) {
-        for (int i = 0; i < lines.size(); i++) {
-            int x = lines.get(i).get(0) - 1, y = lines.get(i).get(1) - 1, t = lines.get(i).get(2);
+        for (List<Integer> line : lines) {
+            int x = line.get(0) - 1, y = line.get(1) - 1, t = line.get(2);
             if (t == 0) {
                 house.getCellByCoordinate(x, y).setWallDirection(Direction.UP);
                 house.getCellByCoordinate(x - 1, y).setWallDirection(Direction.DOWN);
