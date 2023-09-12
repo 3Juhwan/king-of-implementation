@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -33,21 +32,19 @@ public class Solve {
         int chocolate = 1;
 
         readVariableNMK();
-        List<List<Integer>> input = readMatrix(houseRowLength);
+        int[][] input = readMatrix(houseRowLength, houseColumnLength);
         House house = setHouse(input, targets, heaters);
 
         readVariableR();
-        input = readMatrix(r);
+        input = readMatrix(r, 3);
         setWall(input, house);
 
-        while (simulate(house, heaters)) {
+        while (simulate(house, heaters) && chocolate < 101) {
             chocolate++;
-            br.readLine();
         }
 
         System.out.println(chocolate);
     }
-
 
     public static boolean simulate(House house, List<Heater> heaters) {
         propagateWind(house, heaters);
@@ -56,12 +53,13 @@ public class Solve {
         return inspect(targets, house, k);
     }
 
-
-    private static List<List<Integer>> readMatrix(int x) throws IOException {
-        List<List<Integer>> input = new ArrayList<>();
-        for (int i = 0; i < x; i++) {
-            input.add(Arrays.stream(br.readLine().split(" "))
-                    .map(Integer::parseInt).toList());
+    private static int[][] readMatrix(int n, int m) throws IOException {
+        int[][] input = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            String[] row = br.readLine().split(" ");
+            for (int j = 0; j < m; j++) {
+                input[i][j] = Integer.parseInt(row[j]);
+            }
         }
         return input;
     }
@@ -77,27 +75,29 @@ public class Solve {
         k = Integer.parseInt(st.nextToken());
     }
 
-    public static House setHouse(List<List<Integer>> lines, List<Tuple> investigators, List<Heater> heaters) {
-        int n = lines.size(), m = lines.get(0).size();
+    public static House setHouse(int[][] input, List<Tuple> investigators, List<Heater> heaters) {
+        int n = input.length, m = input[0].length;
 
         Cell[][] house = new Cell[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                int num = lines.get(i).get(j);
+                int num = input[i][j];
+
                 if (num == 5) {
                     investigators.add(Tuple.of(i, j));
                 } else if (num > 0) {
                     heaters.add(new Heater(i, j, Direction.valueOfLabel(num)));
                 }
+
                 house[i][j] = new Cell(i, j);
             }
         }
         return new House(house);
     }
 
-    public static void setWall(List<List<Integer>> lines, House house) {
-        for (List<Integer> line : lines) {
-            int x = line.get(0) - 1, y = line.get(1) - 1, t = line.get(2);
+    public static void setWall(int[][] input, House house) {
+        for (int[] line : input) {
+            int x = line[0] - 1, y = line[1] - 1, t = line[2];
             if (t == 0) {
                 house.getCell(x, y).setWallExist(Direction.UP);
                 house.getCell(x - 1, y).setWallExist(Direction.DOWN);
@@ -107,6 +107,4 @@ public class Solve {
             }
         }
     }
-
-
 }
