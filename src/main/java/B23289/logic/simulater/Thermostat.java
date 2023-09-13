@@ -21,7 +21,7 @@ public class Thermostat {
         for (int i = 0; i < house.getRowLength(); i++) {
             for (int j = 0; j < house.getColumnLength() - 1; j++) {
                 Cell cell1 = house.getCell(i, j), cell2 = house.getCell(i, j + 1);
-                if(cell1.getWallExist(Direction.RIGHT)) {
+                if (cell1.getWallExist(Direction.RIGHT)) {
                     continue;
                 }
                 compareCell(controlAmount, cell1, cell2);
