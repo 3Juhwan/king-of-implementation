@@ -11,24 +11,8 @@ public class Input {
     private int[][] houseInput;
     private int[][] wallInput;
 
-    public int getN() {
-        return n;
-    }
-
-    public int getM() {
-        return m;
-    }
-
     public int getK() {
         return k;
-    }
-
-    public int getR() {
-        return r;
-    }
-
-    public int[][] getHouseInput() {
-        return houseInput;
     }
 
     public int[][] readHouseInput() throws IOException {

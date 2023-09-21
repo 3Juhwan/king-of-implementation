@@ -27,7 +27,7 @@ public class Heater {
         return this.direction;
     }
 
-    public Wind generateWind(House house) {
+    public Wind generateWind() {
         int nx = posX + direction.getDx(), ny = posY + direction.getDy();
         return new Wind(id++, nx, ny, direction, 5);
     }

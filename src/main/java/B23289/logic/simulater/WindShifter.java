@@ -11,18 +11,10 @@ import java.util.List;
 import java.util.Queue;
 
 public class WindShifter {
-
-
-    /**
-     * Generate winds from heaters, and propagate them
-     *
-     * @param house
-     * @param heaters
-     */
     public static void propagateWind(House house, List<Heater> heaters) {
         for (Heater heater : heaters) {
             Queue<Wind> windQueue = new LinkedList<>();
-            Wind wind = heater.generateWind(house);
+            Wind wind = heater.generateWind();
             windQueue.add(wind);
             wind.changeTemperature(house);
 
@@ -104,22 +96,11 @@ public class WindShifter {
         return null;
     }
 
-
-    /**
-     * Validate wind
-     * condition(2): not-out-of-bound, not-visited
-     *
-     * @param wind
-     * @param house
-     * @return validation result
-     */
     private static boolean windValidation(Wind wind, House house) {
         if (outOfBounds(wind.getX(), wind.getY(), house.getRowLength(), house.getColumnLength())) {
             return false;
-        } else if (visited(wind, house)) {
-            return false;
         } else {
-            return true;
+            return !visited(wind, house);
         }
     }
 
