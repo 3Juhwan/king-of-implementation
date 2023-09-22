@@ -1,17 +1,17 @@
 package B23289;
 
-import B23289.logic.*;
-import B23289.logic.object.Cell;
-import B23289.logic.object.Heater;
-import B23289.logic.object.House;
-import B23289.logic.utils.Direction;
-import B23289.logic.utils.Tuple;
+import B23289.object.Cell;
+import B23289.object.Heater;
+import B23289.object.House;
+import B23289.utils.Direction;
+import B23289.utils.Tuple;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static B23289.simulater.HouseMaker.setHouse;
+import static B23289.simulater.HouseMaker.setWall;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -20,6 +20,7 @@ public class InputTest {
 
     @Test
     void setHouseTest() {
+        // given
         int[][] houseInput = new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 4, 0, 0, 0},
@@ -36,20 +37,13 @@ public class InputTest {
                 {5, 6, 0}
         };
 
-        // given
-        List<List<Integer>> lines = Arrays.stream(houseInput).map(line ->
-                Arrays.asList(Arrays.stream(line).boxed().toArray(Integer[]::new))
-        ).toList();
-        List<List<Integer>> wallLines = Arrays.stream(wallInput).map(line ->
-                Arrays.asList(Arrays.stream(line).boxed().toArray(Integer[]::new))
-        ).toList();
 
         List<Tuple> investigators = new ArrayList<>();
         List<Heater> heaters = new ArrayList<>();
 
         // when
-        House house = Solve.setHouse(lines, investigators, heaters);
-        Solve.setWall(wallLines, house);
+        House house = setHouse(houseInput, investigators, heaters);
+        setWall(wallInput, house);
 
         // then
         assertThat(investigators).extracting(Tuple::getFirst, Tuple::getSecond)
