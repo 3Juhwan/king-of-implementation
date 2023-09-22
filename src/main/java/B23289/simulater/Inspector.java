@@ -1,7 +1,7 @@
-package B23289.logic.simulater;
+package B23289.simulater;
 
-import B23289.logic.object.House;
-import B23289.logic.utils.Tuple;
+import B23289.object.House;
+import B23289.utils.Tuple;
 
 import java.util.List;
 

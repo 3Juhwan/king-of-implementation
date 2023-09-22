@@ -1,4 +1,4 @@
-package B23289.logic.object;
+package B23289.object;
 
 public class House {
 

@@ -1,4 +1,4 @@
-package B23289.logic.utils;
+package B23289.utils;
 
 import java.util.Map;
 import java.util.stream.Collectors;

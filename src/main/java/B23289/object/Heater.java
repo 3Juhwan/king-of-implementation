@@ -1,6 +1,6 @@
-package B23289.logic.object;
+package B23289.object;
 
-import B23289.logic.utils.Direction;
+import B23289.utils.Direction;
 
 public class Heater {
 

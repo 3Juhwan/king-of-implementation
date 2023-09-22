@@ -1,10 +1,10 @@
-package B23289.logic.simulater;
+package B23289.simulater;
 
-import B23289.logic.object.Cell;
-import B23289.logic.object.Heater;
-import B23289.logic.object.House;
-import B23289.logic.utils.Direction;
-import B23289.logic.utils.Tuple;
+import B23289.object.Cell;
+import B23289.object.Heater;
+import B23289.object.House;
+import B23289.utils.Direction;
+import B23289.utils.Tuple;
 
 import java.util.List;
 

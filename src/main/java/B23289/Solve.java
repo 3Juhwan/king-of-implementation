@@ -1,20 +1,20 @@
-package B23289.logic;
+package B23289;
 
-import B23289.logic.object.Heater;
-import B23289.logic.object.House;
-import B23289.logic.utils.Input;
-import B23289.logic.utils.Tuple;
+import B23289.object.Heater;
+import B23289.object.House;
+import B23289.utils.Input;
+import B23289.utils.Tuple;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static B23289.logic.simulater.HouseMaker.setHouse;
-import static B23289.logic.simulater.HouseMaker.setWall;
-import static B23289.logic.simulater.Inspector.inspect;
-import static B23289.logic.simulater.Thermostat.controlTemperature;
-import static B23289.logic.simulater.Thermostat.decreaseOuterCell;
-import static B23289.logic.simulater.WindShifter.propagateWind;
+import static B23289.simulater.HouseMaker.setHouse;
+import static B23289.simulater.HouseMaker.setWall;
+import static B23289.simulater.Inspector.inspect;
+import static B23289.simulater.Thermostat.controlTemperature;
+import static B23289.simulater.Thermostat.decreaseOuterCell;
+import static B23289.simulater.WindShifter.propagateWind;
 
 public class Solve {
 
